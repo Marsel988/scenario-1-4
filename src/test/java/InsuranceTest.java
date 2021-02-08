@@ -1,7 +1,9 @@
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -10,6 +12,8 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.assertEquals;
 
 public class InsuranceTest {
 
@@ -38,32 +42,64 @@ public class InsuranceTest {
         WebElement buttonCatalog = driver.findElement(By.xpath("//*[contains(text(),'Перейти в каталог')]"));
         wait.until(ExpectedConditions.visibilityOf(buttonCatalog)).click();
         // Нажать на – Оформить Онлайн
-        WebElement buttonOform = driver.findElement(By.xpath("(//*[contains(@class,'kit-button kit-button_type_main')])[3]"));
-        wait.until(ExpectedConditions.visibilityOf(buttonOform)).click();
+        WebElement title = driver.findElement(By.xpath("//h3[contains(text(),'Страхование для путешественников')]"));
+        wait.until(ExpectedConditions.visibilityOf(title));
+        assertEquals("Страхование для путешественников",title.getText());
+        driver.findElement(By.xpath("//h3[contains(text(),'Страхование для путешественников')]/../../..//*[contains(text(),'Оформить онлайн')]")).click();
         // На вкладке – Выбор полиса  выбрать сумму страховой защиты – Минимальная
-//        WebElement button3 = driver.findElement(By.xpath("//div[contains(@class, 'online-card-program selected')]//div//div"));
-//        wait.until(ExpectedConditions.visibilityOf(button3)).click();
+        WebElement title1 = driver.findElement(By.xpath("//h2[contains(text(), 'Страхование путешественников')]"));
+        wait.until(ExpectedConditions.visibilityOf(title1));
+        assertEquals("Страхование путешественников",title1.getText());
+        // На вкладке – Выбор полиса  выбрать сумму страховой защиты – Минимальная
+        WebElement minField = driver.findElement(By.xpath("//*[contains(@class, 'online-card-program selected')]"));
+        wait.until(ExpectedConditions.visibilityOf(minField));
         // Нажать Оформить
-        driver.findElement(By.xpath("//*[contains(@class,'btn btn-primary btn-large')]")).click();
+        WebElement buttonOnline = driver.findElement(By.xpath("//*[contains(@class,'btn btn-primary btn-large')]"));
+        wait.until(ExpectedConditions.visibilityOf(buttonOnline)).click();
+
         // Заполнение полей
         fillField(By.id("surname_vzr_ins_0"), "Иванов");
         fillField(By.id("name_vzr_ins_0"), "Иван");
-        fillField(By.id("birthDate_vzr_ins_0"), "20091997");
+        fillField(By.id("birthDate_vzr_ins_0"), "20.09.1997");
+        driver.findElement(By.xpath("//html")).click();
         fillField(By.id("person_lastName"), "Иванов");
         fillField(By.id("person_firstName"), "Иван");
         fillField(By.id("person_middleName"), "Иванович");
-        fillField(By.id("person_birthDate"), "20091997");
-        WebElement buttonMan = driver.findElement(By.xpath("//*[contains(text(), 'Мужской')]"));
-        wait.until(ExpectedConditions.visibilityOf(buttonMan)).click();
-//        driver.findElement(By.xpath("//*[contains(text(), 'Мужской')]")).click();
+        fillField(By.id("person_birthDate"), "20.09.1997");
+        WebElement person_birthDate = driver.findElement(By.id("person_birthDate"));
+        person_birthDate.sendKeys(Keys.TAB);
+        driver.findElement(By.xpath("//*[contains(text(), 'Мужской')]")).click();
         fillField(By.id("passportSeries"), "1234");
         fillField(By.id("passportNumber"), "567890");
-        fillField(By.id("documentDate"), "20122019");
-        fillField(By.id("documentIssue"), "УФМС РОСИИ");
+        fillField(By.id("documentDate"), "20.12.2019");
+        WebElement documentDate = driver.findElement(By.id("documentDate"));
+        documentDate.sendKeys(Keys.TAB);
+        fillField(By.id("documentIssue"), "УФМС РОССИИ");
 
+        assertEquals("Иванов", driver.findElement(By.id("surname_vzr_ins_0")).getAttribute("value"));
+        assertEquals("Иван", driver.findElement(By.id("name_vzr_ins_0")).getAttribute("value"));
+        assertEquals("20.09.1997", driver.findElement(By.id("birthDate_vzr_ins_0")).getAttribute("value"));
+        assertEquals("Иванов", driver.findElement(By.id("person_lastName")).getAttribute("value"));
+        assertEquals("Иван", driver.findElement(By.id("person_firstName")).getAttribute("value"));
+        assertEquals("Иванович", driver.findElement(By.id("person_middleName")).getAttribute("value"));
+        assertEquals("20.09.1997", driver.findElement(By.id("person_birthDate")).getAttribute("value"));
+        assertEquals("1234", driver.findElement(By.id("passportSeries")).getAttribute("value"));
+        assertEquals("567890", driver.findElement(By.id("passportNumber")).getAttribute("value"));
+        assertEquals("20.12.2019", driver.findElement(By.id("documentDate")).getAttribute("value"));
+        assertEquals("УФМС РОССИИ", driver.findElement(By.id("documentIssue")).getAttribute("value"));
 
+        driver.findElement(By.xpath("//*[contains(text(),'Продолжить')]")).click();
+
+        //Проверка на ошибку
+        WebElement errorMessage = driver.findElement(By.xpath("//*[contains(@role,'alert-form')]"));
+        assertEquals("При заполнении данных произошла ошибка", errorMessage.getText());
+        WebElement errorTitle1 = driver.findElement(By.xpath("//*[contains(@name, 'phone')]//*[contains(text(),'Поле не заполнено.')]"));
+        assertEquals("Поле не заполнено.", errorTitle1.getText());
+        WebElement errorTitle2 = driver.findElement(By.xpath("//*[contains(@name, 'email')]//*[contains(text(),'Поле не заполнено.')]"));
+        assertEquals("Поле не заполнено.", errorTitle2.getText());
+        WebElement errorTitle3 = driver.findElement(By.xpath("//*[contains(@name, 'repeatEmail')]//*[contains(text(),'Поле не заполнено.')]"));
+        assertEquals("Поле не заполнено.", errorTitle3.getText());
     }
-
 
     public void fillField(By locator, String value) {
         driver.findElement(locator).clear();
