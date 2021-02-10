@@ -1,7 +1,4 @@
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -15,23 +12,12 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 
-public class InsuranceTest {
-
-    WebDriver driver;
-    String baseUrl;
-
-    @Before
-    public void beforeTest() {
-        System.setProperty("webdriver.chrome.driver", "driver/chromedriver.exe");
-        driver = new ChromeDriver();
-        baseUrl = "http://www.sberbank.ru/ru/person";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
-        driver.get(baseUrl);
-    }
+public class InsuranceTest extends BaseTest{
 
     @Test
+    @Ignore
     public void testInsurance() throws InterruptedException {
+        driver.get(baseUrl);
         // Закрытие cookie
         driver.findElement(By.xpath("//*[text()='Закрыть']")).click();
         // Нажать на – Страхование
@@ -99,15 +85,5 @@ public class InsuranceTest {
         assertEquals("Поле не заполнено.", errorTitle2.getText());
         WebElement errorTitle3 = driver.findElement(By.xpath("//*[contains(@name, 'repeatEmail')]//*[contains(text(),'Поле не заполнено.')]"));
         assertEquals("Поле не заполнено.", errorTitle3.getText());
-    }
-
-    public void fillField(By locator, String value) {
-        driver.findElement(locator).clear();
-        driver.findElement(locator).sendKeys(value);
-    }
-
-    @After
-    public void afterTest() {
-        driver.quit();
     }
 }
