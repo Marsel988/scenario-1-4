@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,11 +11,12 @@ public class IssuePage {
     public IssuePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
-    @FindBy(xpath = "//html")
-    public WebElement buttonEmptyField;
 
     @FindBy(xpath = "//*[contains(text(), 'Мужской')]")
     public WebElement buttonMan;
+
+    @FindBy(xpath = "//*[contains(text(), 'Женский')]")
+    public WebElement buttonWoman;
 
     @FindBy(xpath = "//*[contains(text(),'Продолжить')]")
     public WebElement buttonContinue;
@@ -64,7 +66,64 @@ public class IssuePage {
     @FindBy(xpath = "//*[contains(@role,'alert-form')]")
     public WebElement errorTitle;
 
-    public void checkErrorMessage(String expected, String actual){
+    public void issueFillField(String fieldName, String value) {
+        switch (fieldName) {
+            case "Фамилия застрахованного":
+                fillField(firstPersonSurname, value);
+                break;
+            case "Имя застрахованного":
+                fillField(firstPersonName, value);
+                break;
+            case "Дата рождения застрахованного":
+                fillField(firstPersonBirthDate, value);
+                firstPersonBirthDate.sendKeys(Keys.TAB);
+                break;
+            case "Фамилия":
+                fillField(personLastName, value);
+                break;
+            case "Имя":
+                fillField(personFirstName, value);
+                break;
+            case "Отчество":
+                fillField(personMiddleName, value);
+                break;
+            case "Дата рождения":
+                fillField(personBirthDate, value);
+                personBirthDate.sendKeys(Keys.TAB);
+                break;
+            case "Серия паспорта":
+                fillField(passportSeries, value);
+                break;
+            case "Номер паспорта":
+                fillField(passportNumber, value);
+                break;
+            case "Дата выдачи":
+                fillField(documentDate, value);
+                documentDate.sendKeys(Keys.TAB);
+                break;
+            case "Кем выдан":
+                fillField(documentIssue, value);
+                break;
+            default:
+                throw new AssertionError("Поле '" + fieldName + "' не объявлено на странице");
+        }
+    }
 
+    public void fillField(WebElement element, String value) {
+        element.clear();
+        element.sendKeys(value);
+    }
+
+    public void selectSex(String sex) {
+        switch (sex) {
+            case "Мужской":
+                buttonMan.click();
+                break;
+            case "Женский":
+                buttonWoman.click();
+                break;
+            default:
+                throw new AssertionError("Поле '" + sex + "' не объявлено на странице");
+        }
     }
 }

@@ -1,15 +1,18 @@
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.Keys;
 import pages.InsuranceCatalogPage;
 import pages.InsurancePage;
 import pages.IssuePage;
 import pages.MainPage;
+import steps.BaseSteps;
 
 import static org.junit.Assert.assertEquals;
 
-public class RefactoringTest extends BaseTest {
+public class RefactoringTest extends BaseSteps {
 
     @Test
+    @Ignore
     public void newInsuranceTest() throws InterruptedException {
         MainPage mainPage = new MainPage(driver);
         mainPage.buttonCookieClose.click();                                                             // Закрытие cookie
@@ -42,9 +45,9 @@ public class RefactoringTest extends BaseTest {
         fillField(issuePage.documentIssue, "УФМС РОССИИ");
         issuePage.buttonMan.click();
         issuePage.buttonContinue.click();
-        issuePage.checkErrorMessage("Поле не заполнено.", issuePage.phoneError.getText());
-        issuePage.checkErrorMessage("Поле не заполнено.", issuePage.emailError.getText());
-        issuePage.checkErrorMessage("Поле не заполнено.", issuePage.repeatEmailError.getText());
-        issuePage.checkErrorMessage("При заполнении данных произошла ошибка", issuePage.errorTitle.getText());
+        assertEquals("Поле не заполнено.", issuePage.phoneError.getText());
+        assertEquals("Поле не заполнено.", issuePage.emailError.getText());
+        assertEquals("Поле не заполнено.", issuePage.repeatEmailError.getText());
+        assertEquals("При заполнении данных произошла ошибка", issuePage.errorTitle.getText());
     }
 }

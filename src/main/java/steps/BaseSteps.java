@@ -1,16 +1,19 @@
+package steps;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import ru.yandex.qatools.allure.annotations.Attachment;
+import ru.yandex.qatools.allure.annotations.Step;
+import util.TestProperties;
 
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-public class BaseTest {
+public class BaseSteps {
     protected static WebDriver driver;
     protected static String baseUrl;
     public static Properties properties = TestProperties.getINSTANCE().getProperties();
@@ -38,17 +41,32 @@ public class BaseTest {
     }
 
     @AfterClass
-    public static void tearDown() throws Exception{
+    public static void tearDown() throws Exception {
         driver.quit();
     }
 
-    public static void fillField(WebElement element, String value) {
+    protected static void fillField(WebElement element, String value) {
         element.clear();
         element.sendKeys(value);
     }
-    public static void fillField(By locator, String value) {
+
+    protected static void fillField(By locator, String value) {
         driver.findElement(locator).clear();
         driver.findElement(locator).sendKeys(value);
     }
+
+    @Attachment(type = "image/png", value = "Screenshot")
+    public static byte[] takeScreenshot(){
+        return ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
+    }
+//    @Step("отображается поле {0}")
+//    protected static boolean checkTitle(By locator) {
+//        try {
+//            driver.findElement(locator);
+//            return true;
+//        } catch (NoSuchElementException e) {
+//            return false;
+//        }
+//    }
 
 }
