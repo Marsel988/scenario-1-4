@@ -1,5 +1,7 @@
 package steps;
 
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.IssuePage;
 import ru.yandex.qatools.allure.annotations.Step;
 
@@ -25,6 +27,5 @@ public class IssueSteps extends BaseSteps {
     public void buttonContinue() {
         new IssuePage(driver).buttonContinue.click();
     }
-
 
 }

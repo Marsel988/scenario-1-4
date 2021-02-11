@@ -1,14 +1,24 @@
+
 import org.junit.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import pages.InsuranceCatalogPage;
+import pages.IssuePage;
 import ru.yandex.qatools.allure.annotations.Title;
 import steps.*;
 
 import java.util.HashMap;
 
-public class NewInsuranceTestAllure extends BaseSteps {
+import static org.junit.Assert.assertEquals;
+
+public class NewInsuranceAllureTest extends BaseSteps {
 
     @Test
     @Title("Страхование для путешественников")
-    public void testInsurance() throws InterruptedException {
+    public void testInsurance(){
+        Wait<WebDriver> wait = new WebDriverWait(driver, 5, 1000);
         MainSteps mainSteps = new MainSteps();
         InsuranceCatalogSteps insuranceCatalogSteps = new InsuranceCatalogSteps();
         InsuranceSteps insuranceSteps = new InsuranceSteps();
@@ -26,16 +36,23 @@ public class NewInsuranceTestAllure extends BaseSteps {
         fields.put("Номер паспорта","567890");
         fields.put("Дата выдачи","20.12.19");
         fields.put("Кем выдан","УФМС РОССИИ");
+
         mainSteps.buttonCloseCookie();
         mainSteps.selectMainMenu("Страхование");
         mainSteps.selectInsuranceMenu("Перейти в каталог");
 
+        wait.until(ExpectedConditions.visibilityOf(new InsuranceCatalogPage(driver).titleTravel));
         insuranceCatalogSteps.sendButtonTravel();
         insuranceSteps.issueButton();
+
         issueSteps.stepFillFields(fields);
         issueSteps.selectSex("Женский");
-        Thread.sleep(10000);
         issueSteps.buttonContinue();
+
+        wait.until(ExpectedConditions.visibilityOf(new IssuePage(driver).phoneError));
+        wait.until(ExpectedConditions.visibilityOf(new IssuePage(driver).emailError));
+        wait.until(ExpectedConditions.visibilityOf(new IssuePage(driver).repeatEmailError));
+        wait.until(ExpectedConditions.visibilityOf(new IssuePage(driver).errorTitle));
 
     }
 }

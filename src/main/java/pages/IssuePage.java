@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import static steps.BaseSteps.fillField;
 
 public class IssuePage {
 
@@ -107,11 +108,6 @@ public class IssuePage {
             default:
                 throw new AssertionError("Поле '" + fieldName + "' не объявлено на странице");
         }
-    }
-
-    public void fillField(WebElement element, String value) {
-        element.clear();
-        element.sendKeys(value);
     }
 
     public void selectSex(String sex) {

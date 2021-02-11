@@ -14,9 +14,14 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class BaseSteps {
+
     protected static WebDriver driver;
     protected static String baseUrl;
     public static Properties properties = TestProperties.getINSTANCE().getProperties();
+
+    public static WebDriver getDriver() {
+        return driver;
+    }
 
     @BeforeClass
     public static void setUp() throws Exception {
@@ -45,28 +50,14 @@ public class BaseSteps {
         driver.quit();
     }
 
-    protected static void fillField(WebElement element, String value) {
+    public static void fillField(WebElement element, String value) {
         element.clear();
         element.sendKeys(value);
     }
 
-    protected static void fillField(By locator, String value) {
+    public static void fillField(By locator, String value) {
         driver.findElement(locator).clear();
         driver.findElement(locator).sendKeys(value);
     }
-
-    @Attachment(type = "image/png", value = "Screenshot")
-    public static byte[] takeScreenshot(){
-        return ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
-    }
-//    @Step("отображается поле {0}")
-//    protected static boolean checkTitle(By locator) {
-//        try {
-//            driver.findElement(locator);
-//            return true;
-//        } catch (NoSuchElementException e) {
-//            return false;
-//        }
-//    }
 
 }
