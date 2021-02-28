@@ -1,4 +1,4 @@
-package step;
+package OldTests;
 
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;

@@ -1,4 +1,4 @@
-package step;
+package OldTests;
 
 import org.junit.*;
 import org.openqa.selenium.By;
