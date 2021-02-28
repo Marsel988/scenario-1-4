@@ -1,3 +1,4 @@
+package step;
 
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -41,18 +42,18 @@ public class NewInsuranceAllureTest extends BaseSteps {
         mainSteps.selectMainMenu("Страхование");
         mainSteps.selectInsuranceMenu("Перейти в каталог");
 
-        wait.until(ExpectedConditions.visibilityOf(new InsuranceCatalogPage(driver).titleTravel));
+        wait.until(ExpectedConditions.visibilityOf(new InsuranceCatalogPage().titleTravel));
         insuranceCatalogSteps.sendButtonTravel();
         insuranceSteps.issueButton();
 
         issueSteps.stepFillFields(fields);
-        issueSteps.selectSex("Женский");
+        issueSteps.selectSexManOrWoman("Женский");
         issueSteps.buttonContinue();
 
-        wait.until(ExpectedConditions.visibilityOf(new IssuePage(driver).phoneError));
-        wait.until(ExpectedConditions.visibilityOf(new IssuePage(driver).emailError));
-        wait.until(ExpectedConditions.visibilityOf(new IssuePage(driver).repeatEmailError));
-        wait.until(ExpectedConditions.visibilityOf(new IssuePage(driver).errorTitle));
+        wait.until(ExpectedConditions.visibilityOf(new IssuePage().phoneError));
+        wait.until(ExpectedConditions.visibilityOf(new IssuePage().emailError));
+        wait.until(ExpectedConditions.visibilityOf(new IssuePage().repeatEmailError));
+        wait.until(ExpectedConditions.visibilityOf(new IssuePage().errorTitle));
 
     }
 }

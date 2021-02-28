@@ -61,7 +61,7 @@
                     <properties>
                         <property>
                             <name>listener</name>
-                            <value>util.AllureListener</value>
+                            <value>util.AllureReporter</value>
                         </property>
                     </properties>
                 </configuration>
@@ -80,6 +80,27 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.19.1</version>
+            <configuration>
+                <includes>
+                    <include>**/CucumberRunner.java</include>
+                </includes>
+                <testFailureIgnore>true</testFailureIgnore>
+                <argLine>
+                    -Dfile.encoding=UTF-8 -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+                </argLine>
+            </configuration>
+            <dependencies>
+                <dependency>
+                    <groupId>org.aspectj</groupId>
+                    <artifactId>aspectjweaver</artifactId>
+                    <version>${aspectj.version}</version>
+                </dependency>
+            </dependencies>
+        </plugin>
         </plugins>
     </build>
 

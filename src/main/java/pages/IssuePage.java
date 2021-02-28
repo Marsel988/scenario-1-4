@@ -13,8 +13,8 @@ import static steps.BaseSteps.fillField;
 
 public class IssuePage {
 
-    public IssuePage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
+    public IssuePage() {
+        PageFactory.initElements(BaseSteps.getDriver(), this);
     }
 
     @FindBy(xpath = "//*[contains(text(), 'Мужской')]")

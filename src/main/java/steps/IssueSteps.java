@@ -10,10 +10,10 @@ import java.util.HashMap;
 
 import static org.junit.Assert.assertTrue;
 
-public class IssueSteps extends BaseSteps {
+public class IssueSteps{
     @Step("поле {0} заполняется значением {1}")
     public void stepFillField(String field, String value) {
-        new IssuePage(driver).issueFillField(field, value);
+        new IssuePage().issueFillField(field, value);
     }
 
     @Step("заполняются поля")
@@ -22,31 +22,31 @@ public class IssueSteps extends BaseSteps {
     }
 
     @Step("выбран {0} пол")
-    public void selectSex(String value) {
-        new IssuePage(driver).selectSex(value);
+    public void selectSexManOrWoman(String value) {
+        new IssuePage().selectSex(value);
     }
 
     @Step("выполнено нажатие на кнопку - Продолжить")
     public void buttonContinue() {
-        new IssuePage(driver).buttonContinue.click();
+        new IssuePage().buttonContinue.click();
     }
 
     @Step("поле {0} заполнено значением {1}")
     public void checkFillField(String field, String value){
-        String actual = new IssuePage(driver).getFillField(field);
+        String actual = new IssuePage().getFillField(field);
         assertTrue(String.format("Значение поля [%s] равно [%s]. Ожидалось - [%s]", field, actual, value),
                 actual.equals(value));
     }
 
     @Step("в поле {0} присутствует сообщение об ошибке {1}")
     public void checkErrorMessageField(String field, String value){
-        new IssuePage(driver).checkFieldErrorMessage(field, value);
+        new IssuePage().checkFieldErrorMessage(field, value);
     }
 
     @Step("отображается сообщение об ошибке")
     public void checkErrorMessageTitle(){
         assertTrue("Не отображается сообщение об ошибке",
-                new IssuePage(driver).errorTitle.isDisplayed());
+                new IssuePage().errorTitle.isDisplayed());
     }
 
 

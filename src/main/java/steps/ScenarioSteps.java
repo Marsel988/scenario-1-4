@@ -4,6 +4,7 @@ import cucumber.api.DataTable;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pages.InsuranceCatalogPage;
+import steps.*;
 
 import static org.junit.Assert.assertTrue;
 
@@ -15,21 +16,21 @@ public class ScenarioSteps {
     BaseSteps baseSteps = new BaseSteps();
     InsuranceSteps insuranceSteps = new InsuranceSteps();
 
-    @When("^пользователь открывает url \"(.+)\"$")
-    public void openURL(String URL) {
-        switch (URL) {
-            case "Сбербанка":
-                baseSteps.openBaseURL("sber.url");
-                break;
-            case "Яндекса":
-                baseSteps.openBaseURL("yandex.url");
-                break;
-            default:
-                throw new AssertionError(URL + " не обявлен");
-        }
-    }
+//    @When("^пользователь открывает url \"(.+)\"$")
+//    public void openURL(String URL) {
+//        switch (URL) {
+//            case "Сбербанка":
+//                baseSteps.openBaseURL("sber.url");
+//                break;
+//            case "Яндекса":
+//                baseSteps.openBaseURL("yandex.url");
+//                break;
+//            default:
+//                throw new AssertionError(URL + " не обявлен");
+//        }
+//    }
 
-    @When("^пользователь нажимает на кнопку - Закрыть cookie")
+    @When("^пользователь нажимает на кнопку - Закрыть cookie$")
     public void clickButton() {
         mainSteps.buttonCloseCookie();
     }
@@ -84,6 +85,11 @@ public class ScenarioSteps {
     @When("^отображается сообщение об ошибке$")
     public void checkErrorTitle() {
         issueSteps.checkErrorMessageTitle();
+    }
+
+    @When("^пользователь нажимает на кнопку - Продолжить$")
+    public void clickButtonContinue() {
+        issueSteps.buttonContinue();
     }
 
 

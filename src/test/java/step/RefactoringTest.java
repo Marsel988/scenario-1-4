@@ -1,3 +1,5 @@
+package step;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.Keys;
@@ -14,21 +16,21 @@ public class RefactoringTest extends BaseSteps {
     @Test
     @Ignore
     public void newInsuranceTest() throws InterruptedException {
-        MainPage mainPage = new MainPage(driver);
+        MainPage mainPage = new MainPage();
         mainPage.buttonCookieClose.click();                                                             // Закрытие cookie
                                                                                                         // Главная
         mainPage.selectMainMenu("Страхование");
         mainPage.selectInsuranceMenu("Перейти в каталог");
                                                                                                         // Каталог страхования
-        InsuranceCatalogPage insuranceCatalogPage = new InsuranceCatalogPage(driver);
+        InsuranceCatalogPage insuranceCatalogPage = new InsuranceCatalogPage();
         assertEquals("Страхование для путешественников", insuranceCatalogPage.titleTravel.getText());
         insuranceCatalogPage.sendButton.click();
                                                                                                         // Выбор полиса
-        InsurancePage insurancePage = new InsurancePage(driver);
+        InsurancePage insurancePage = new InsurancePage();
         insurancePage.minCardProgram.isDisplayed();
         insurancePage.buttonIssue.click();
                                                                                                         // Оформление
-        IssuePage issuePage = new IssuePage(driver);
+        IssuePage issuePage = new IssuePage();
         fillField(issuePage.firstPersonSurname, "Иванов");
         fillField(issuePage.firstPersonName, "Иван");
         fillField(issuePage.firstPersonBirthDate, "20.09.1997");
