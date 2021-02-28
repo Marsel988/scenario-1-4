@@ -22,4 +22,6 @@ public class InsuranceCatalogPage {
         Wait<WebDriver> wait = new WebDriverWait(driver, 5, 1000);
         wait.until(ExpectedConditions.visibilityOf(sendButton));
     }
+
+
 }

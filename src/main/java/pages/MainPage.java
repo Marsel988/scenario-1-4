@@ -28,6 +28,4 @@ public class MainPage {
     public void selectInsuranceMenu(String name) {
         insuranceMenu.findElement(By.xpath(".//*[contains(text(),'" + name + "')]")).click();
     }
-
-
 }

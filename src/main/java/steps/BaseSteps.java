@@ -37,8 +37,17 @@ public class BaseSteps {
             default:
                 System.setProperty("webdriver.chrome.driver", properties.getProperty("webdriver.chrome.driver"));
                 driver = new ChromeDriver();
+
         }
-        baseUrl = properties.getProperty("app.url");
+        baseUrl = properties.getProperty("sber.url");
+        System.out.println(baseUrl);
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
+        driver.get(baseUrl);
+
+    }
+    public static void openBaseURL(String Url){
+        baseUrl = properties.getProperty(Url);
         System.out.println(baseUrl);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.manage().window().maximize();

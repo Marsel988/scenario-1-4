@@ -11,7 +11,7 @@ import steps.*;
 
 import java.util.HashMap;
 
-import static org.junit.Assert.assertEquals;
+
 
 public class NewInsuranceAllureTest extends BaseSteps {
 
